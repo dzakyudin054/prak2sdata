@@ -1,0 +1,122 @@
+#include<iostream>
+#include <cstdlib>
+using namespace std;
+  
+struct Node
+{
+   int data;
+   struct Node *next;
+};
+
+struct Node *buat(struct Node *tail, int baru)
+{
+   if (tail != NULL)
+   return tail;
+  
+   struct Node *temp = new Node;
+  
+   temp -> data = baru;
+   tail = temp;
+  
+   tail->next = tail;
+  
+   return tail;
+}
+struct Node *inDepan(struct Node *tail, int baru)
+{
+
+   if (tail == NULL)
+   return buat(tail, baru);
+  
+   struct Node *temp = new Node;
+  
+   temp -> data = baru;
+   temp -> next = tail -> next;
+   tail -> next = temp;
+  
+   return tail;
+}
+
+struct Node *inBelakang(struct Node *tail, int baru)
+{
+   if (tail == NULL)
+   return buat(tail, baru);
+  
+   struct Node *temp = new Node;
+  
+   temp -> data = baru;
+   temp -> next = tail -> next;
+   tail -> next = temp;
+   tail = temp;
+  
+   return tail;
+}
+  
+
+struct Node *sisip(struct Node *tail, int baru, int after_item)
+{
+   if (tail == NULL)
+   return NULL;
+  
+   struct Node *temp, *p;
+   p = tail -> next;
+   do
+   {
+      if (p ->data == after_item)
+      {
+         temp = new Node;
+         temp -> data = baru;
+         temp -> next = p -> next;
+         p -> next = temp;
+        
+         if (p == tail)
+         tail = temp;
+         return tail;
+       }
+   p = p -> next;
+ } while(p != tail -> next);
+  
+   cout << "Data node "<<after_item << " tidak ada dalam list." << endl;
+   return tail;
+  
+}
+
+void tampil(struct Node *tail) {
+   struct Node *p;
+
+   if (tail == NULL) {
+      cout << "List Kosong" << endl;
+      return;
+      }
+p = tail -> next;
+  
+do {
+      cout << p -> data << "-->";
+      p = p -> next;
+      } while(p!=tail->next);
+   if(p == tail->next){
+   	do {
+      cout << p -> data << "-->";
+      p = p -> next;
+      } while(p!=tail->next);
+   }
+   cout<<p->data;
+   cout<<"\n\n";
+   }
+
+
+int main()
+{
+   struct Node *tail = NULL;
+  
+   tail = buat(tail, 1);
+   tail = inDepan(tail, 2);
+   tail = inDepan(tail, 3);
+   tail = inBelakang(tail, 6);
+   tail = inBelakang(tail, 7);
+   tail = inBelakang(tail, 8);
+   tail = sisip(tail, 4, 1);
+   cout<<"Circular linked list:"<<endl;
+   tampil(tail);
+   return 0;
+}
