@@ -1,0 +1,116 @@
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+
+    Node *next, *prev;
+};
+Node *awal=NULL,*akhir=NULL,*bantu,*baru,*hapus;
+
+void buat(struct Node *tail, int data)
+{
+
+   baru = new Node;
+   baru->next = NULL;
+   baru->prev = NULL;
+   baru->data = data;
+  if(awal!=NULL){
+    return tail;
+  }else{
+   awal = akhir = baru;
+   tail = awal; 
+    }
+  
+}
+void inputDatadepan(struct Node *tail, int data){
+        baru = new Node;
+        baru->next = NULL;
+        baru->prev = NULL;
+        baru->data = data;
+    if (awal == NULL){
+        buat(tail,data);
+    }else{
+        baru->next = awal;
+        awal->prev = baru;
+        awal = baru;
+  } 
+}
+void insertTengah(struct Node *tail, int data, int cari){
+
+	baru = new Node; 
+	baru->data = data;  
+	baru->next = NULL; 
+	baru->prev = NULL; 
+	bantu = awal; 
+	while(bantu->data != cari)
+	{
+	bantu = bantu->next; 
+    }
+	baru->next = bantu->next; 
+  baru->prev = bantu; 
+  bantu->next=baru;
+	bantu=bantu->next;
+  bantu=bantu->next;
+  bantu->prev=baru;
+
+}
+
+void inputDatabelakang(struct Node *tail, int data){
+    baru = new Node;
+    baru->next = NULL;
+    baru->prev = NULL;
+    baru->data = data;
+    if (awal == NULL){
+        buat(tail,data);
+    }
+    else {
+        akhir->next = baru;
+        baru->prev = akhir;
+        akhir = baru;
+      }
+}
+
+
+void outputData (struct Node *tail){
+    bantu=awal;
+    while (bantu != NULL){
+
+        cout <<bantu->data<<"->";
+        bantu = bantu->next;
+    }
+    cout<<endl;
+}
+void outputmaju (struct Node *tail){
+    bantu=akhir;
+    while (bantu != NULL){
+
+        cout <<bantu->data<<"->";
+        bantu = bantu->prev;
+    }
+    cout<<endl;
+}
+
+int main()
+{
+          struct Node *tail = NULL;
+  
+            buat(tail, 1);
+            outputData(tail);
+            inputDatadepan(tail,2);
+            outputData(tail);
+            inputDatadepan(tail,3);
+            outputData(tail);
+            inputDatabelakang(tail,6);
+            outputData(tail);
+            inputDatabelakang(tail,7);
+            outputData(tail);
+            inputDatabelakang(tail,8);
+            outputData(tail);
+            insertTengah(tail,4,1);         
+    cout<<"Cetak Mundur :\n";
+            outputData(tail);
+    cout<<"Cetak Maju :\n";
+            outputmaju(tail);
+
+}
